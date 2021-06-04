@@ -3,9 +3,9 @@ import { Button, Input } from "antd";
 import useAxios from "axios-hooks";
 import Axios from "axios";
 import { useAppContext } from "store";
-import Comment from "Comment";
+import Comment from "./Comment";
 
-export default function CommentList({ post }) {
+export default function CommentList({ recruit }) {
   const {
     store: { jwtToken },
   } = useAppContext();
@@ -24,7 +24,7 @@ export default function CommentList({ post }) {
     console.group("handleCommentSave");
 
     try {
-      const response = await Axios.post(
+      const response = await Axios.recruit(
         apiUrl,
         { message: commentContent },
         { headers }

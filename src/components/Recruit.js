@@ -5,7 +5,7 @@ import "./Recruit.scss";
 import CommentList from "./CommentList";
 
 function Recruit({ recruit }) {
-  const { author, product, photo, location, platform, celler } = post;
+  const { author, product, photo, location, platform, celler } = recruit;
   const { username } = author; // TODO: 추후 수정
 
   return (

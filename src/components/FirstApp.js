@@ -1,6 +1,6 @@
 import React from "react";
 import { Input, Menu } from "antd";
-import "FirstApp.scss";
+import "./FirstApp.scss";
 import Logo from "assets/logo.png";
 
 function FirstApp({ children }) {

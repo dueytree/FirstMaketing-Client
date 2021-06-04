@@ -4,7 +4,7 @@ import moment from "moment";
 
 export default function Comment({ comment }) {
   const {
-    author: { username },
+    author: { username, name },
     message,
     created_at,
   } = comment;

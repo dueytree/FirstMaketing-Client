@@ -1,63 +1,32 @@
-import React, { useState } from "react";
-import { Button, Input } from "antd";
+import React, { useEffect, useState } from "react";
+import { Alert } from "antd";
 import useAxios from "axios-hooks";
-import Axios from "axios";
+import Recruit from "./Recruit";
 import { useAppContext } from "store";
-import Comment from "./Comment";
+import Axios from "axios";
 
-export default function CommentList({ recruit }) {
+function RecruitList() {
   const {
     store: { jwtToken },
   } = useAppContext();
 
-  const [commentContent, setCommentContent] = useState("");
-
   const headers = { Authorization: `JWT ${jwtToken}` };
 
-  const [{ data: commentList }, refetch] = useAxios({
-    url: `http://127.0.0.1:8000/api/posts/${recruit.id}/comments/`,
+  const [{ data: recruitList, loading, error }, refetch] = useAxios({
+    url: "http://127.0.0.1:8000/api/recruit/",
     headers,
   });
 
-  const handleCommentSave = async () => {
-    const apiUrl = `http://127.0.0.1:8000/api/posts/${recruit.id}/comments/`;
-    console.group("handleCommentSave");
-
-    try {
-      const response = await Axios.post(
-        apiUrl,
-        { message: commentContent },
-        { headers }
-      );
-      console.log(response);
-      setCommentContent("");
-      refetch();
-    } catch (error) {
-      console.log(error);
-    }
-    console.groupEnd();
-  };
-
   return (
     <div>
-      {commentList &&
-        commentList.map((comment) => (
-          <Comment key={comment.id} comment={comment} />
+      {recruitList && recruitList.length === 0 && (
+        <Alert type="warning" message="포스팅이 없습니다. :-(" />
+      )}
+      {recruitList &&
+        recruitList.map((recruit) => (
+          <Recruit recruit={recruit} key={recruit.id} />
         ))}
-
-      <Input.TextArea
-        style={{ marginBottom: "0.5em" }}
-        value={commentContent}
-        onChange={(e) => setCommentContent(e.target.value)}
-      />
-      <Button
-        block
-        type="primary"
-        disabled={commentContent.length === 0}
-        onClick={handleCommentSave}
-      >
-        댓글 쓰기
-      </Button>
     </div>
   );
 }
+export default RecruitList;
